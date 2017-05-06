@@ -8,6 +8,9 @@ body {
 	background-size: cover;
 	background-repeat: no-repeat;
 }
+.mt-30 {
+	margin-top: 30px;
+}
 .mt-200 {
 	margin-top: 200px;
 }
@@ -21,21 +24,44 @@ body {
   text-align: center;
   border-radius: 5px;
 }
-
-
-
-
-
-body
-{
-	line-height: 1.6em;
+.settings {
+	color: #333;
 }
+
+/* ------------- bootstrap override code -----------------------*/
+
+.nav li a {
+	color:#fff;
+	font-size: 17px;
+	padding: 10px 5px 5px 5px;
+  border-radius: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.nav.nav-pills {
+	text-align: center;
+}
+.nav>li>a:focus, .nav>li>a:hover {
+	background-color: transparent;
+	color: #00ffd8;
+}
+.nav-pills>li { 
+	display: inline-block;
+	float: none;
+}
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+	color:#00ffd8;
+	background: transparent;
+	border-bottom: solid 2px #00ffd8;
+}
+
+
 
 #stats
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size: 12px;
-	width: 480px;
+	width: 80%;
 	text-align: left;
 	border-collapse: collapse;
 }
