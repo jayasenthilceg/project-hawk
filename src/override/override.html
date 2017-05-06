@@ -1,36 +1,37 @@
-<!DOCTYPE html>
 <html>
-<head>
-	<title>Hawk</title>
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/background.css">
-	<script type="text/javascript" src="/js/jquery/jquery.min.js"></script>
-	<script type="text/javascript" src="/js/script.js"></script>
+  <head>
+  <style>
+
+  td,th {
+    color: black;
+  }
+
+  </style>
+  <!-- <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="buttons.css"/> -->
+  <script src="/js/config.js"></script>
+  <script src="/js/sites.js"></script>
+  <script src="/js/popup.js"></script>
+
 </head>
-<body>
-	<div class="container-fluid mt-200">
-		<div class="row mt-100">
-			<div class="col-md-3">
-				<div class="dashboard-box">
-					sample 
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="dashboard-box">
-					sample 
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="dashboard-box">
-					sample 
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div class="dashboard-box">
-					sample 
-				</div>
-			</div>
-		</div>
-	</div>
-</body>
+  <body>
+    <div id="button_row">
+      <button id="options" class="pure-button">Options</button>&nbsp;
+      <button id="clear" class="pure-button">Clear</button>&nbsp;
+    </div>
+    <div id="lastClear"></div>
+    <div id="nextClear"></div>
+    <div>
+      <table id="stats">
+        <thead>
+          <tr>
+            <th scope="col">Site</th>
+            <th scope="col">Time</th>
+            <th scope="col">Percent</th>
+          </tr>
+        </thead>
+        <tbody id="stats_tbody"></tbody>
+      </table>
+    </div>
+  </body>
 </html>

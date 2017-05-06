@@ -11,8 +11,9 @@
   },
   "default_locale": "en",
   "background": {
-    "page": "src/bg/background.html",
-    "persistent": true
+    // "page": "src/bg/background.html",
+    "persistent": true,
+    "scripts": ["js/config.js", "js/sites.js", "js/tracker.js", "src/bg/background.js"]
   },
   "options_page": "src/options/index.html",
   "browser_action": {
@@ -23,11 +24,15 @@
   "chrome_url_overrides": {
     "newtab": "src/override/override.html"
   },
+  "web_accessible_resources": [
+  "images/file.png"
+  ],
   "permissions": [
     "bookmarks",
     "chrome://favicon/",
     "history",
     "idle",
+    "alarms",
     "management",
     "notifications",
     "tabs",
