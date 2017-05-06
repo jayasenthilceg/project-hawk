@@ -40,29 +40,74 @@ function secondsToString(seconds) {
   return s;
 }
 
-function addLocalDisplay() {
-  var old_tbody = document.getElementById("stats_tbody");
-  var tbody = document.createElement("tbody");
-  tbody.setAttribute("id", "stats_tbody");
-  old_tbody.parentNode.replaceChild(tbody, old_tbody);
+var sites = gsites.sites;
+var siteHostVsCategory = {
+  'facebook.com': 'social',
+  'twitter.com': 'social',
+  'whatsapp.com': 'communications',
+  'mail.google.com': 'communications',
+  'skype.com': 'communications',
+  'inbox.google.com': 'communications',
+  'youtube.com': 'entertainment',
+  'github.com': 'productivity',
+  'stackoverflow.com': 'productivity',
+  'google.com': 'search',
+  'calendar.google.com': 'communications',
+}
 
-  /* Sort sites by time spent */
-  var sites = gsites.sites;
-  var sortedSites = new Array();
-  var totalTime = 0;
-  for (site in sites) {
-   sortedSites.push([site, sites[site]]);
-   totalTime += sites[site];
+var siteHostVsTimeSpent = {}
+var categoryVsTimeSpent = {
+  social: 0,
+  communications: 0,
+  entertainment: 0,
+  productivity: 0,
+  search: 0,
+  others: 0
+};
+
+function prepareStats() {
+  // cleanup siteurls
+  for(siteUrl in sites) {
+    var siteHost = new URL(siteUrl).hostname.replace('www.','');
+    var timeSpent = sites[siteUrl];
+    siteHostVsTimeSpent[siteHost] = (siteHostVsTimeSpent[siteHost]||0) + timeSpent;
   }
-  sortedSites.sort(function(a, b) {
+  // remove noise
+  delete siteHostVsTimeSpent['extensions'];
+  delete siteHostVsTimeSpent['newtab'];
+  
+  // categorize time spent
+  for(siteHost in siteHostVsCategory) {
+    var timeSpent = siteHostVsTimeSpent[siteHost]||0;
+    if(siteHost in siteHostVsCategory){
+      categoryVsTimeSpent[siteHostVsCategory[siteHost]] += timeSpent;
+    } else {
+      categoryVsTimeSpent['others'] += timeSpent;
+    }
+  }
+}
+
+function displayStats(siteDict, htmlElementId) {
+  var sortedStats = new Array();
+  var totalTime = 0;
+  for (site in siteDict) {
+   sortedStats.push([site, siteDict[site]]);
+   totalTime += siteDict[site];
+  }
+  sortedStats.sort(function(a, b) {
    return b[1] - a[1];
   });
 
   /* Show only the top 15 sites by default */
   var max = 15;
   if (document.location.href.indexOf("show=all") != -1) {
-   max = sortedSites.length;
+   max = sortedStats.length;
   }
+
+  var old_tbody = document.getElementById(htmlElementId);
+  var tbody = document.createElement("tbody");
+  tbody.setAttribute("id", htmlElementId);
+  old_tbody.parentNode.replaceChild(tbody, old_tbody);
 
   /* Add total row. */
   var row = document.createElement("tr");
@@ -79,13 +124,13 @@ function addLocalDisplay() {
   tbody.appendChild(row);
 
   var maxTime = 0;
-  if (sortedSites.length) {
-    maxTime = sites[sortedSites[0][0]];
+  if (sortedStats.length) {
+    maxTime = siteDict[sortedStats[0][0]];
   }
   var relativePct = 0;
-  for (var index = 0; ((index < sortedSites.length) && (index < max));
+  for (var index = 0; ((index < sortedStats.length) && (index < max));
       index++ ){
-   var site = sortedSites[index][0];
+   var site = sortedStats[index][0];
    row = document.createElement("tr");
    cell = document.createElement("td");
    var removeImage = document.createElement("img");
@@ -104,20 +149,20 @@ function addLocalDisplay() {
    cell.appendChild(a);
    row.appendChild(cell);
    cell = document.createElement("td");
-   cell.appendChild(document.createTextNode(secondsToString(sites[site])));
+   cell.appendChild(document.createTextNode(secondsToString(siteDict[site])));
    row.appendChild(cell);
    cell = document.createElement("td");
    cell.appendChild(document.createTextNode(
-     (sites[site] / totalTime * 100).toFixed(2)));
-   relativePct = (sites[site]/maxTime*100).toFixed(2);
+     (siteDict[site] / totalTime * 100).toFixed(2)));
+   relativePct = (siteDict[site]/maxTime*100).toFixed(2);
    row = setPercentageBG(row,relativePct);
    row.appendChild(cell);
    tbody.appendChild(row);
   }
 
   /* Show the "Show All" link if there are some sites we didn't show. */
-  if (max < sortedSites.length && document.getElementById("show") == null) {
-    /* Add an option to show all stats */
+  if (max < sortedStats.length && document.getElementById("show") == null) {
+    /* Add an option to show all sites */
     var showAllLink = document.createElement("a");
     showAllLink.onclick = function() {
      chrome.tabs.create({url: "popup.html?show=all"});
@@ -158,7 +203,9 @@ function clearStats() {
 }
 
 function initialize() {
-  addLocalDisplay();
+  prepareStats();
+  displayStats(siteHostVsTimeSpent, "category_stats_tbody");
+  displayStats(categoryVsTimeSpent, "sites_stats_tbody");
 
   if (config.lastClearTime) {
     var div = document.getElementById("lastClear");

@@ -2,7 +2,6 @@
  * Responsible for detecting focus change from tabs and windows.
  */
 function Tracker(config, sites) {
-  debugger;
   this._sites = sites;
   var self = this;
   chrome.tabs.onUpdated.addListener(
