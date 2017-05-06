@@ -12,7 +12,7 @@ function addIgnoredSite(new_site) {
   };
 }
 
-function secondsToString(seconds) {
+function humanizeTime(seconds) {
   if (config.timeDisplayFormat == Config.timeDisplayFormatEnum.MINUTES) {
     return (seconds/60).toFixed(2);
   }
@@ -64,6 +64,7 @@ var categoryVsTimeSpent = {
   search: 0,
   others: 0
 };
+var totalTime = undefined;
 
 function prepareStats() {
   // cleanup siteurls
@@ -87,105 +88,28 @@ function prepareStats() {
   }
 }
 
-function displayStats(siteDict, htmlElementId) {
+function transformStats(siteDict) {
   var sortedStats = new Array();
-  var totalTime = 0;
-  for (site in siteDict) {
-   sortedStats.push([site, siteDict[site]]);
-   totalTime += siteDict[site];
+  for(site in siteDict) {
+    sortedStats.push(
+      {
+        statName: site,
+        time: siteDict[site]
+      }
+    );
   }
   sortedStats.sort(function(a, b) {
-   return b[1] - a[1];
+    return b.time - a.time;
   });
-
-  /* Show only the top 15 sites by default */
-  var max = 15;
-  if (document.location.href.indexOf("show=all") != -1) {
-   max = sortedStats.length;
-  }
-
-  var old_tbody = document.getElementById(htmlElementId);
-  var tbody = document.createElement("tbody");
-  tbody.setAttribute("id", htmlElementId);
-  old_tbody.parentNode.replaceChild(tbody, old_tbody);
-
-  /* Add total row. */
-  var row = document.createElement("tr");
-  var cell = document.createElement("td");
-  cell.innerHTML = "<b>Total</b>";
-  row.appendChild(cell);
-  cell = document.createElement("td");
-  cell.appendChild(document.createTextNode(secondsToString(totalTime)));
-  row.appendChild(cell);
-  cell = document.createElement("td");
-  cell.appendChild(document.createTextNode(("100")));
-  row.appendChild(cell);
-  row = setPercentageBG(row,0);
-  tbody.appendChild(row);
-
-  var maxTime = 0;
-  if (sortedStats.length) {
-    maxTime = siteDict[sortedStats[0][0]];
-  }
-  var relativePct = 0;
-  for (var index = 0; ((index < sortedStats.length) && (index < max));
-      index++ ){
-   var site = sortedStats[index][0];
-   row = document.createElement("tr");
-   cell = document.createElement("td");
-   var removeImage = document.createElement("img");
-   removeImage.src = chrome.extension.getURL("/images/remove.png");
-   removeImage.title = "Remove and stop tracking.";
-   removeImage.width = 15;
-   removeImage.height = 10;
-   removeImage.onclick = addIgnoredSite(site);
-   cell.appendChild(removeImage);
-   var a = document.createElement('a');
-   var linkText = document.createTextNode(site);
-   a.appendChild(linkText);
-   a.title = "Open link in new tab";
-   a.href = site;
-   a.target = "_blank";
-   cell.appendChild(a);
-   row.appendChild(cell);
-   cell = document.createElement("td");
-   cell.appendChild(document.createTextNode(secondsToString(siteDict[site])));
-   row.appendChild(cell);
-   cell = document.createElement("td");
-   cell.appendChild(document.createTextNode(
-     (siteDict[site] / totalTime * 100).toFixed(2)));
-   relativePct = (siteDict[site]/maxTime*100).toFixed(2);
-   row = setPercentageBG(row,relativePct);
-   row.appendChild(cell);
-   tbody.appendChild(row);
-  }
-
-  /* Show the "Show All" link if there are some sites we didn't show. */
-  if (max < sortedStats.length && document.getElementById("show") == null) {
-    /* Add an option to show all sites */
-    var showAllLink = document.createElement("a");
-    showAllLink.onclick = function() {
-     chrome.tabs.create({url: "popup.html?show=all"});
+  var maxTime = sortedStats[0].time;
+  return sortedStats.map(function(stat) {
+    return {
+      statName: stat.statName,
+      statValue: humanizeTime(stat.time),
+      percentage: (stat.time / totalTime * 100).toFixed(2),
+      // relativePct: (stat.time / maxTime * 100).toFixed(2)
     }
-    showAllLink.setAttribute("id", "show");
-    showAllLink.setAttribute("href", "javascript:void(0)");
-    showAllLink.setAttribute("class", "pure-button");
-    showAllLink.appendChild(document.createTextNode("Show All"));
-    document.getElementById("button_row").appendChild(showAllLink);
-  } else if (document.getElementById("show") != null) {
-    var showLink = document.getElementById("show");
-    showLink.parentNode.removeChild(showLink);
-  }
-}
-
-function setPercentageBG(row,pct) {
-  var color = "#e8edff";
-  row.style.backgroundImage = "-webkit-linear-gradient(left, "+color+" "+pct+"%,#ffffff "+pct+"%)";
-  row.style.backgroundImage = "    -moz-linear-gradient(left, "+color+" "+pct+"%, #ffffff "+pct+"%)";
-  row.style.backgroundImage = "     -ms-linear-gradient(left, "+color+" "+pct+"%,#ffffff "+pct+"%)";
-  row.style.backgroundImage = "      -o-linear-gradient(left, "+color+" "+pct+"%,#ffffff "+pct+"%)";
-  row.style.backgroundImage = "         linear-gradient(to right, "+color+" "+pct+"%,#ffffff "+pct+"%)";
-  return row;
+  });
 }
 
 function sendStats() {
@@ -204,8 +128,13 @@ function clearStats() {
 
 function initialize() {
   prepareStats();
-  displayStats(siteHostVsTimeSpent, "category_stats_tbody");
-  displayStats(categoryVsTimeSpent, "sites_stats_tbody");
+  totalTime = Object.values(categoryVsTimeSpent).reduce((a, b) => a + b).toFixed(2);
+  var sortedSiteStats = transformStats(siteHostVsTimeSpent);
+  console.log(sortedSiteStats);
+  var sortedCategoryStats = transformStats(categoryVsTimeSpent);
+  console.log(sortedCategoryStats);
+  // displayStats(siteHostVsTimeSpent, "category_stats_tbody");
+  // displayStats(categoryVsTimeSpent, "sites_stats_tbody");
 
   if (config.lastClearTime) {
     var div = document.getElementById("lastClear");
@@ -236,6 +165,5 @@ document.addEventListener("DOMContentLoaded", function() {
   // document.getElementById("options").addEventListener("click",
   //     function() { chrome.runtime.openOptionsPage(); });
   // var buttons = document.querySelectorAll("button");
-  
   initialize();
 });
