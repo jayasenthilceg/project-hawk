@@ -168,8 +168,14 @@ document.addEventListener("DOMContentLoaded", function() {
   initialize();
   console.log(sortedSiteStats[0])
   for (i=0; i < 4; i++ ) {
-    var dahsboardHtml = '<div class="col-md-3"><div class="dashboard-box"><a href="http://${sortedSiteStats[i].statName}"><h3>${sortedSiteStats[i].statName}</h3></a><h4>${sortedSiteStats[i].statValue}</h4><h6 class="percentage">${sortedSiteStats[i].percentage}</h6></div></div>';
+    var dahsboardHtml = '<div class="col-md-3"><div class="dashboard-box"><a href="http://${sortedSiteStats[i].statName}"><h3>${sortedSiteStats[i].statName}</h3></a><h4>${sortedSiteStats[i].statValue}</h4><h6 class="percentage">${sortedSiteStats[i].percentage} %</h6></div></div>';
     $.template( "dashboardTmpl", dahsboardHtml );
     $.tmpl( "dashboardTmpl", sortedSiteStats[i] ).appendTo( ".dahboard-container" );
+
+    // category based websites
+    var dahsboardHtmlCategory = '<div class="col-md-3"><div class="dashboard-box"><h3>${sortedCategoryStats[i].statName}</h3><h4>${sortedCategoryStats[i].statValue}</h4><h6 class="percentage">${sortedSiteStats[i].percentage} %</h6></div></div>';
+    $.template( "dashboardTmplCategory", dahsboardHtmlCategory );
+    $.tmpl( "dashboardTmplCategory", sortedCategoryStats[i] ).appendTo( ".dahboard-container-category" );
+
   }
 });

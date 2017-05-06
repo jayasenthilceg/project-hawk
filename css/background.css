@@ -17,6 +17,18 @@ body {
 .mt-100 {
 	margin-top: 100px;
 }
+.mb-30 {
+	margin-bottom: 30px;
+}
+.dahboard-container-category h3 {
+	text-transform: capitalize;
+}
+.text-center {
+	text-align: center;
+}
+.dahboard-container-category .dashboard-box {
+	background: rgba(62, 62, 62, 0.89);
+}
 .dashboard-box {
   background: rgba(0, 0, 0, 0.3);
   padding-top: 10px;
