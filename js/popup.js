@@ -166,8 +166,8 @@ document.addEventListener("DOMContentLoaded", function() {
   //     function() { chrome.runtime.openOptionsPage(); });
   // var buttons = document.querySelectorAll("button");
   initialize();
-  console.log(sortedSiteStats[0])
   for (i=0; i < 4; i++ ) {
+    // top visited websites
     var dahsboardHtml = '<div class="col-md-3"><div class="dashboard-box"><a href="http://${sortedSiteStats[i].statName}"><h3>${sortedSiteStats[i].statName}</h3></a><h4>${sortedSiteStats[i].statValue}</h4><h6 class="percentage">${sortedSiteStats[i].percentage} %</h6></div></div>';
     $.template( "dashboardTmpl", dahsboardHtml );
     $.tmpl( "dashboardTmpl", sortedSiteStats[i] ).appendTo( ".dahboard-container" );
@@ -176,6 +176,12 @@ document.addEventListener("DOMContentLoaded", function() {
     var dahsboardHtmlCategory = '<div class="col-md-3"><div class="dashboard-box"><h3>${sortedCategoryStats[i].statName}</h3><h4>${sortedCategoryStats[i].statValue}</h4><h6 class="percentage">${sortedSiteStats[i].percentage} %</h6></div></div>';
     $.template( "dashboardTmplCategory", dahsboardHtmlCategory );
     $.tmpl( "dashboardTmplCategory", sortedCategoryStats[i] ).appendTo( ".dahboard-container-category" );
-
   }
+  //all sites list
+  for (i = 0 ; i < sortedSiteStats.length; i++) {
+    var tableAllSitesList = '<tr> <th scope="row">${i+1}</th> <td>${sortedSiteStats[i].statName}</td> <td>${sortedSiteStats[i].statValue}</td> <td>${sortedSiteStats[i].percentage}</td> </tr>';
+    $.template( "tableAllSitesListTmpl", tableAllSitesList );
+    $.tmpl( "tableAllSitesListTmpl", sortedSiteStats[i] ).appendTo( ".all-sites-list-tabl" );
+  }
+
 });

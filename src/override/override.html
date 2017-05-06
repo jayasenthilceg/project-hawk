@@ -104,6 +104,25 @@
 				    </select><br/>
 				    <button id="download" class="pure-button">Download CSV</button><br/>
 				</div>
+
+
+				<!-- ****************** Modal contents starts here ************ -->
+				<!-- Large modal -->
+				<div class="row text-center">
+					<button type="button" class="btn btn-blue" data-toggle="modal" data-target=".all-visited-sites">See all visited sites</button>
+				</div>
+
+				<div class="modal fade all-visited-sites" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+				  <div class="modal-dialog modal-lg" role="document">
+				    <div class="modal-content all-sites-list">
+				    	<h3 class="text-center mb-30">All Sites visited</h3>
+				      <table class="table table-striped all-sites-list-tabl">
+				      	<tr> <th>No</th> <th>Site Name</th> <th>Total time spent</th> <th>Percentage</th> </tr> 
+				      </table>
+				    </div>
+				  </div>
+				</div>
+
     	</div>
     </div>
   </body>

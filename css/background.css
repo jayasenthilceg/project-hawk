@@ -49,9 +49,19 @@ body {
 .percentage {
 	color: #00ffd8;
 }
+.btn-blue {
+	background: #7cf1f1;
+  color: #846e6e;
+}
 
 /* ------------- bootstrap override code -----------------------*/
-
+.modal-content {
+	color: #333;
+  padding: 30px;
+}
+.table-striped {
+	color: #333;
+}
 .nav li a {
 	color:#fff;
 	font-size: 17px;
