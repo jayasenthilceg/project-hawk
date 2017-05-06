@@ -1,0 +1,23 @@
+body {
+	margin:0;
+	padding: 0;
+	background-color: #526ead; /*6dcaff;*/
+	color: #fff;
+	background-image:url('chrome-extension://__MSG_@@extension_id__/images/bg.jpg');
+	-webkit-background-size: cover;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+.mt-200 {
+	margin-top: 200px;
+}
+.mt-100 {
+	margin-top: 100px;
+}
+.dashboard-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding-top: 50px;
+  padding-bottom: 50px;
+  text-align: center;
+  border-radius: 5px;
+}
