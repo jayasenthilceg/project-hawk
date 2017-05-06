@@ -1,38 +1,102 @@
 <html>
   <head>
-  <style>
-
-  td,th {
-    color: black;
-  }
-
-  </style>
-  <!-- <link rel="stylesheet" href="style.css"/>
-  <link rel="stylesheet" href="buttons.css"/> -->
+  <title>Hawk</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="/css/background.css"/>
+  <script src="/js/jquery/jquery.min.js"></script>
   <script src="/js/config.js"></script>
   <script src="/js/sites.js"></script>
+  <script src="/js/options.js"></script>
   <script src="/js/popup.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
 
 </head>
   <body>
-    <div id="button_row">
-      <button id="options" class="pure-button">Options</button>&nbsp;
-      <button id="clear" class="pure-button">Clear</button>&nbsp;
-    </div>
-    <div id="lastClear"></div>
-    <div id="nextClear"></div>
-    <div>
-      <table id="stats">
-        <thead>
-          <tr>
-            <th scope="col">Site</th>
-            <th scope="col">Time</th>
-            <th scope="col">Percent</th>
-          </tr>
-        </thead>
-        <tbody id="category_stats_tbody"></tbody>
-        <tbody id="sites_stats_tbody"></tbody>
-      </table>
+    <div class="container-fluid mt-30">
+	  	<ul  class="nav nav-pills">
+				<li class="active">
+	        <a  href="#1a" data-toggle="tab">Overview</a>
+				</li>
+				<li>
+					<a href="#2a" data-toggle="tab">Settings</a>
+				</li>
+			</ul>
+
+			<div class="tab-content clearfix">
+			<!-- ****************** tab one starts here *************  -->
+			  <div class="tab-pane active" id="1a">
+					<div class="row mt-30">
+						<div class="col-md-3">
+							<div class="dashboard-box">
+								sample 
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="dashboard-box">
+								sample 
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="dashboard-box">
+								sample 
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="dashboard-box">
+								sample 
+							</div>
+						</div>
+					</div>
+		    	<div class="row">
+		    		<div class="col-md-2-offset"></div>
+		    		<div class="col-md-6">
+		    			<!-- <div id="button_row" class="mt-30">
+					      <button id="options" class="btn btn-warning">Options</button>
+					      <button id="clear" class="btn btn-danger">Clear</button>
+					    </div> -->
+					    <div id="lastClear"></div>
+					    <div id="nextClear"></div>
+					    <div class="mt-30">
+					      <table id="stats">
+					        <thead>
+					          <tr>
+					            <th scope="col">Site</th>
+					            <th scope="col">Time</th>
+					            <th scope="col">Percent</th>
+					          </tr>
+					        </thead>
+					        <tbody id="stats_tbody"></tbody>
+					      </table>
+					    </div>
+		    		</div>
+		    	</div>
+	    	</div>
+
+	    	<!-- ****************** tab two starts here *************  -->
+				<div class="tab-pane settings" id="2a">
+	        <b>Time Display</b>:
+				    <select id="time_display" class="pure-input-1-2">
+				      <option value="0">Pretty</option>
+				      <option value="1">Minutes</option>
+				    </select>
+				    <br/>
+				    <b>Manage Ignored Sites</b>: <br/>
+				    <input type="text" id="new_ignored_site"></input>
+				    <button id="add_ignored">Add</button><br/>
+				    <select id="ignored_sites" MULTIPLE size="10">
+				    </select><br/>
+				    <button id="remove_ignored">Remove Selected</button>
+				    <br/>
+				    <b>Clear Statistics Every</b>:
+				    <select id="clear_stats_interval">
+				      <option value="0">never</option>
+				      <option value="3600">Hour</option>
+				      <option value="86400">Day</option>
+				      <option value="604800">Week</option>
+				    </select><br/>
+				    <button id="download" class="pure-button">Download CSV</button><br/>
+				</div>
+    	</div>
     </div>
   </body>
 </html>

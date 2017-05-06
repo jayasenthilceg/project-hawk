@@ -134,9 +134,9 @@ function displayStats(siteDict, htmlElementId) {
    row = document.createElement("tr");
    cell = document.createElement("td");
    var removeImage = document.createElement("img");
-   removeImage.src = chrome.extension.getURL("images/remove.png");
+   removeImage.src = chrome.extension.getURL("/images/remove.png");
    removeImage.title = "Remove and stop tracking.";
-   removeImage.width = 10;
+   removeImage.width = 15;
    removeImage.height = 10;
    removeImage.onclick = addIgnoredSite(site);
    cell.appendChild(removeImage);
@@ -231,15 +231,11 @@ function initialize() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById("clear").addEventListener("click",
-    function() { if (confirm("Are you sure?")) { clearStats(); }});
-  document.getElementById("options").addEventListener("click",
-      function() { chrome.runtime.openOptionsPage(); });
-  var buttons = document.querySelectorAll("button");
-  for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener("click", function(e) {
-      _gaq.push(["_trackEvent", e.target.id, "clicked"]);
-    });
-  }
+  // document.getElementById("clear").addEventListener("click",
+  //   function() { if (confirm("Are you sure?")) { clearStats(); }});
+  // document.getElementById("options").addEventListener("click",
+  //     function() { chrome.runtime.openOptionsPage(); });
+  // var buttons = document.querySelectorAll("button");
+  
   initialize();
 });
