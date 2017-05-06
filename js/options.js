@@ -96,15 +96,15 @@ function download() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("add_ignored").addEventListener(
-    "click", addIgnoredSite);
-  document.getElementById("remove_ignored").addEventListener(
-    "click", removeIgnoredSites);
-  document.getElementById("clear_stats_interval").addEventListener(
-    "change", updateClearStatsInterval);
-  document.getElementById("time_display").addEventListener(
-    "change", updateTimeDisplay);
-  document.getElementById("download").addEventListener(
-    "click", download);
-  restoreOptions();
+  // // document.getElementById("add_ignored").addEventListener(
+  // //   "click", addIgnoredSite);
+  // document.getElementById("remove_ignored").addEventListener(
+  //   "click", removeIgnoredSites);
+  // document.getElementById("clear_stats_interval").addEventListener(
+  //   "change", updateClearStatsInterval);
+  // document.getElementById("time_display").addEventListener(
+  //   "change", updateTimeDisplay);
+  // document.getElementById("download").addEventListener(
+  //   "click", download);
+  // restoreOptions();
 });

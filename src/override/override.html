@@ -1,6 +1,6 @@
 <html>
   <head>
-  <title>Hawk</title>
+  <title>Hawk - Personal productivity monitor</title>
   <link rel="stylesheet" href="/css/bootstrap.min.css"/>
   <link rel="stylesheet" href="/css/background.css"/>
   <script src="/js/jquery/jquery.min.js"></script>
@@ -85,7 +85,7 @@
 
 	    	<!-- ****************** tab two starts here *************  -->
 				<div class="tab-pane settings" id="2a">
-	        <b>Time Display</b>:
+	        <!-- <b>Time Display</b>:
 				    <select id="time_display" class="pure-input-1-2">
 				      <option value="0">Pretty</option>
 				      <option value="1">Minutes</option>
@@ -105,7 +105,79 @@
 				      <option value="86400">Day</option>
 				      <option value="604800">Week</option>
 				    </select><br/>
-				    <button id="download" class="pure-button">Download CSV</button><br/>
+				    <button id="download" class="pure-button">Download CSV</button><br/> -->
+
+
+				    <!-- ******************* Event form ******************* -->
+				    <div class="row">
+				    	<div class="col-md-12">
+			    		<div class="row mt-30">
+			    			<div class="col-md-12 text-center">
+			    				<h2 class="color-white">Event</h2>
+			    			</div>
+			    		</div>
+				    		<form id="rule_options_form" class="mt-30 rule_options_form">
+				    			<div class="col-md-2">
+				    				<select class="form-control site-name-list" name="site_name"></select>
+				    			</div>
+				    			<div class="col-md-2">
+				    				<select class="form-control" name="metric_name">
+				    					<option>Time spent</option>
+				    					<option>Times visited</option>
+				    				</select>
+				    			</div>
+				    			<div class="col-md-2">
+				    				<select class="form-control" name="operation">
+				    					<option>Less than</option>
+				    					<option>Greater than</option>
+				    					<option>Equal</option>
+				    				</select>
+				    			</div>
+				    			<div class="col-md-2">
+				    				<input type="text" class="form-control" name="value" placeholder="Enter value in Number">
+				    			</div>
+				    			<div class="col-md-2">
+				    				<select class="form-control" name="time_window">
+				    					<option>An hour</option>
+				    					<option>An day</option>
+				    					<option>An week</option>
+				    				</select>
+				    			</div>
+				    			<button type="submit" class="btn btn-blue" value="1">Add Rule</button>
+				    		</form>
+				    	</div>
+				    </div>
+
+
+				    <div class="row">
+				    	<div class="col-md-12">
+			    		<div class="row mt-30">
+			    			<div class="col-md-12 text-center">
+			    				<h2 class="color-white">Action</h2>
+			    			</div>
+			    		</div>
+				    		<form id="action_options_form" class="mt-30">
+				    			<div class="col-md-2">
+				    				<select class="form-control action_type_values" name="action_type" id="action_type_values">
+				    					<option value="1">Warning Notification</option>
+				    					<option value="2">Cheers Notification</option>
+				    					<option value="3">Custom Message</option>
+				    					<option value="4">Close Tab</option>
+				    					<option value="5">Open Tab</option>
+				    				</select>
+				    			</div>
+				    			<div class="col-md-2 hide custom-msg-value">
+				    				<input type="text" class="form-control" name="custom_msg_value" placeholder="Enter message">
+				    			</div>
+				    			<div class="col-md-2 hide open-tab-value">
+				    				<input type="text" class="form-control" name="open_tab_value" placeholder="Enter message">
+				    			</div>
+				    			
+				    			<button type="submit" class="btn btn-blue" value="1">Add Action</button>
+				    		</form>
+				    	</div>
+				    </div>
+
 				</div>
 
 
@@ -115,7 +187,7 @@
 				<div class="modal fade all-visited-sites" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
 				  <div class="modal-dialog modal-lg" role="document">
 				    <div class="modal-content all-sites-list">
-				    	<h3 class="text-center mb-30">All Sites visited</h3>
+				    	<h3 class="text-center mb-30">All visited sites</h3>
 				      <table class="table table-striped all-sites-list-tabl">
 				      	<tr> <th>No</th> <th>Site Name</th> <th>Total time spent</th> <th>Percentage</th> </tr> 
 				      </table>

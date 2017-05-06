@@ -53,6 +53,12 @@ body {
 	background: #7cf1f1;
   color: #846e6e;
 }
+.color-white {
+	color: #fff;
+}
+.hide {
+	display: none;
+}
 
 /* ------------- bootstrap override code -----------------------*/
 .modal-content {

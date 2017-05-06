@@ -67,6 +67,8 @@ var categoryVsTimeSpent = {
 var totalTime = undefined;
 var sortedSiteStats = {};
 var sortedCategoryStats= {};
+var ruleOptions = {};
+var actionOptions = {};
 
 function prepareStats() {
   // cleanup siteurls
@@ -158,7 +160,39 @@ function initialize() {
      document.createTextNode("Next Reset: " + nextClearStats.toString()));
   }
 }
+$(function() {
+  $("#rule_options_form").on('submit',function(e){
+    ruleOptions = objectifyForm($(this).serializeArray());
+    console.log(ruleOptions); // remove it vikki 
+    e.preventDefault();
+  });
+  function objectifyForm(formArray) {
+    returnArray = {};
+    for (var i = 0; i < formArray.length; i++) {
+        returnArray[formArray[i]['name']] = formArray[i]['value'];
+    }
+    return returnArray;
+  }
 
+  $('#action_type_values').change(function(){
+    if (this.value==='3')
+    {
+      $('.custom-msg-value').fadeIn("slow").removeClass('hide');
+      $('.open-tab-value').fadeOut("slow").addClass('hide');
+    }
+    else if(this.value ==='5') {
+      $('.open-tab-value').fadeIn("slow").removeClass('hide');
+      $('.custom-msg-value').fadeOut("slow").addClass('hide');
+    } else {
+      $('.custom-msg-value, .open-tab-value').fadeOut("slow").addClass('hide');
+    }
+  });
+  $("#action_options_form").on('submit',function(e){
+    actionOptions = objectifyForm($(this).serializeArray());
+    console.log(actionOptions); // remove it vikki 
+    e.preventDefault();
+  });
+});
 document.addEventListener("DOMContentLoaded", function() {
   // document.getElementById("clear").addEventListener("click",
   //   function() { if (confirm("Are you sure?")) { clearStats(); }});
@@ -180,8 +214,11 @@ document.addEventListener("DOMContentLoaded", function() {
   //all sites list
   for (i = 0 ; i < sortedSiteStats.length; i++) {
     var tableAllSitesList = '<tr> <th scope="row">${i+1}</th> <td>${sortedSiteStats[i].statName}</td> <td>${sortedSiteStats[i].statValue}</td> <td>${sortedSiteStats[i].percentage}</td> </tr>';
+    var selectOptionList = '<option name="${sortedSiteStats[i].statName}">${sortedSiteStats[i].statName}</option>'
     $.template( "tableAllSitesListTmpl", tableAllSitesList );
+    $.template( "selectOptionListTmpl", selectOptionList );
     $.tmpl( "tableAllSitesListTmpl", sortedSiteStats[i] ).appendTo( ".all-sites-list-tabl" );
+    $.tmpl( "selectOptionListTmpl", sortedSiteStats[i] ).appendTo( ".site-name-list" );
   }
 
 });
