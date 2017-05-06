@@ -24,8 +24,18 @@ body {
   text-align: center;
   border-radius: 5px;
 }
+.dashboard-box a {
+	color: #fff;
+}
+.dashboard-box a:hover {
+	color: #00ffd8;
+	text-decoration: none;
+}
 .settings {
 	color: #333;
+}
+.percentage {
+	color: #00ffd8;
 }
 
 /* ------------- bootstrap override code -----------------------*/

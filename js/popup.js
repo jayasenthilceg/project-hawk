@@ -65,6 +65,8 @@ var categoryVsTimeSpent = {
   others: 0
 };
 var totalTime = undefined;
+var sortedSiteStats = {};
+var sortedCategoryStats= {};
 
 function prepareStats() {
   // cleanup siteurls
@@ -129,10 +131,8 @@ function clearStats() {
 function initialize() {
   prepareStats();
   totalTime = Object.values(categoryVsTimeSpent).reduce((a, b) => a + b).toFixed(2);
-  var sortedSiteStats = transformStats(siteHostVsTimeSpent);
-  console.log(sortedSiteStats);
-  var sortedCategoryStats = transformStats(categoryVsTimeSpent);
-  console.log(sortedCategoryStats);
+  sortedSiteStats = transformStats(siteHostVsTimeSpent);
+  sortedCategoryStats = transformStats(categoryVsTimeSpent);
   // displayStats(siteHostVsTimeSpent, "category_stats_tbody");
   // displayStats(categoryVsTimeSpent, "sites_stats_tbody");
 
@@ -166,4 +166,10 @@ document.addEventListener("DOMContentLoaded", function() {
   //     function() { chrome.runtime.openOptionsPage(); });
   // var buttons = document.querySelectorAll("button");
   initialize();
+  console.log(sortedSiteStats[0])
+  for (i=0; i < 4; i++ ) {
+    var dahsboardHtml = '<div class="col-md-3"><div class="dashboard-box"><a href="http://${sortedSiteStats[i].statName}"><h3>${sortedSiteStats[i].statName}</h3></a><h4>${sortedSiteStats[i].statValue}</h4><h6 class="percentage">${sortedSiteStats[i].percentage}</h6></div></div>';
+    $.template( "dashboardTmpl", dahsboardHtml );
+    $.tmpl( "dashboardTmpl", sortedSiteStats[i] ).appendTo( ".dahboard-container" );
+  }
 });
