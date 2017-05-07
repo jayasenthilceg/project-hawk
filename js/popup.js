@@ -82,7 +82,7 @@ function prepareStats() {
   delete siteHostVsTimeSpent['newtab'];
   
   // categorize time spent
-  for(siteHost in siteHostVsCategory) {
+  for(siteHost in siteHostVsTimeSpent) {
     var timeSpent = siteHostVsTimeSpent[siteHost]||0;
     if(siteHost in siteHostVsCategory){
       categoryVsTimeSpent[siteHostVsCategory[siteHost]] += timeSpent;
@@ -110,7 +110,7 @@ function transformStats(siteDict) {
     return {
       statName: stat.statName,
       statValue: humanizeTime(stat.time),
-      percentage: (stat.time / totalTime * 100).toFixed(2),
+      percentage: ((stat.time / totalTime) * 100).toFixed(2),
       // relativePct: (stat.time / maxTime * 100).toFixed(2)
     }
   });
@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", function() {
     $.tmpl( "dashboardTmpl", sortedSiteStats[i] ).appendTo( ".dahboard-container" );
 
     // category based websites
-    var dashboardHtmlCategory = '<div class="col-md-3"><div class="dashboard-box"><h3>${sortedCategoryStats[i].statName}</h3><h4>${sortedCategoryStats[i].statValue}</h4><h6 class="percentage">${sortedSiteStats[i].percentage} %</h6></div></div>';
+    var dashboardHtmlCategory = '<div class="col-md-3"><div class="dashboard-box"><h3>${sortedCategoryStats[i].statName}</h3><h4>${sortedCategoryStats[i].statValue}</h4><h6 class="percentage">${sortedCategoryStats[i].percentage} %</h6></div></div>';
     $.template( "dashboardTmplCategoryTmpl", dashboardHtmlCategory );
     $.tmpl( "dashboardTmplCategoryTmpl", sortedCategoryStats[i] ).appendTo( ".dahboard-container-category" );
   }
