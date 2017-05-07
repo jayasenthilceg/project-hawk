@@ -36,11 +36,13 @@ Object.defineProperty(Sites.prototype, "sites", {
  * @return {string} The site, including protocol, but not paths.
  */
 Sites.prototype.getSiteFromUrl = function(url) {
-  var match = url.match(this._siteRegexp);
-  if (match) {
-    return match[1];
+  var simpleUrl = "";
+  try {
+    simpleUrl = new URL(url).hostname.replace('www.','')
+  } catch (e) {
+    console.error('error parsing URL:'+url);
   }
-  return null;
+  return simpleUrl;
 };
 
 Sites.prototype._updateTime = function() {
@@ -54,11 +56,13 @@ Sites.prototype._updateTime = function() {
     return;
   }
   var sites = this.sites;
+  var timeUpdate = delta/1000;
   if (!sites[this._currentSite]) {
     sites[this._currentSite] = 0;
   }
-  sites[this._currentSite] += delta/1000;
+  sites[this._currentSite] += timeUpdate;
   localStorage.sites = JSON.stringify(sites);
+  updateAndObserve(siteVsHourlyTimeSpent, this._currentSite, timeUpdate);
 };
 
 /**
@@ -71,15 +75,15 @@ Sites.prototype.setCurrentFocus = function(url) {
   if (url == null) {
     this._currentSite = null;
     this._startTime = null;
-    chrome.browserAction.setIcon(
-        {path: {19: 'images/icon_paused19.png',
-                38: 'images/icon_paused38.png'}});
+    // chrome.browserAction.setIcon(
+    //     {path: {19: 'images/icon_paused19.png',
+    //             38: 'images/icon_paused38.png'}});
   } else {
     this._currentSite = this.getSiteFromUrl(url);
     this._startTime = new Date();
-    chrome.browserAction.setIcon(
-        {path: {19: 'images/icon19.png',
-                38: 'images/icon38.png'}});
+    // chrome.browserAction.setIcon(
+    //     {path: {19: 'images/icon19.png',
+    //             38: 'images/icon38.png'}});
   }
 };
 

@@ -95,12 +95,12 @@ var metrics = {
 
 
 var siteVsRules = {
-  'facebook.com': {
+  'twitter.com': {
     'hourly': {
       'event': {
         //'metric': 'timeSpent',
         'operator': 'greaterThan',
-        'compareAgainst': '30'
+        'compareAgainst': '10'
       },
       'actions': [{
         'actionKey': 'warningNotification'
@@ -109,12 +109,14 @@ var siteVsRules = {
   }
 }
 
-
-var counter = {
-  'facebook.com': 0
-};
-var observer = new ObjectObserver(counter);
-observer.open(function(added, removed, changed, getOldValueFn) {
+// TEST
+// var counter = {
+//   'facebook.com': 0
+// };
+// var observer = new ObjectObserver(counter);
+var siteVsHourlyTimeSpent = {}
+var siteVsHourlyTimeSpentObserver = new ObjectObserver(siteVsHourlyTimeSpent);
+siteVsHourlyTimeSpentObserver.open(function(added, removed, changed, getOldValueFn) {
   Object.keys(added).forEach(function(site) {
     console.log('site-added:' + site);
     var oldVal = getOldValueFn(site);
@@ -125,7 +127,6 @@ observer.open(function(added, removed, changed, getOldValueFn) {
     var oldVal = getOldValueFn(site);
     var newVal = changed[site];
     evaluateRulesFor(site, newVal);
-
   });
 });
 
@@ -157,16 +158,16 @@ function evaluateRulesFor(site, value, metric) {
   }
 }
 
-function updateCounter(counterObj, key, value) {
+function updateAndObserve(counterObj, key, value) {
   counterObj[key] = (counterObj[key]||0) + value;
   Platform.performMicrotaskCheckpoint();
 }
 
 // Test
-updateCounter(counter, 'facebook.com', 1);
-updateCounter(counter, 'facebook.com', 10);
-updateCounter(counter, 'facebook.com', 30);
-updateCounter(counter, 'facebook.com', 40);
+// updateAndObserve(counter, 'facebook.com', 1);
+// updateAndObserve(counter, 'facebook.com', 10);
+// updateAndObserve(counter, 'facebook.com', 30);
+// updateAndObserve(counter, 'facebook.com', 40);
 
 // TODO
 // 1. create 3 counters for 3 time windows

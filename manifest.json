@@ -13,7 +13,7 @@
   "background": {
     // "page": "src/bg/background.html",
     "persistent": true,
-    "scripts": ["js/config.js", "js/sites.js", "js/tracker.js", "src/bg/background.js"]
+    "scripts": ["js/observejs/observe.js", "js/config.js", "js/sites.js", "js/rule_engine.js", "js/tracker.js", "src/bg/background.js"]
   },
   "options_page": "src/options/index.html",
   "browser_action": {
