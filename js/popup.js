@@ -73,13 +73,14 @@ var actionOptions = {};
 function prepareStats() {
   // cleanup siteurls
   for(siteUrl in sites) {
-    var siteHost = new URL(siteUrl).hostname.replace('www.','');
+    // dirty check
+    if(siteUrl.indexOf('.') == -1) {
+      continue;
+    }
+    var siteHost = siteUrl;
     var timeSpent = sites[siteUrl];
     siteHostVsTimeSpent[siteHost] = (siteHostVsTimeSpent[siteHost]||0) + timeSpent;
   }
-  // remove noise
-  delete siteHostVsTimeSpent['extensions'];
-  delete siteHostVsTimeSpent['newtab'];
   
   // categorize time spent
   for(siteHost in siteHostVsTimeSpent) {
