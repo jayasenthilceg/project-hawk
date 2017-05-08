@@ -120,33 +120,31 @@
 			    		</div>
 				    		<form id="rule_options_form" class="mt-30 rule_options_form">
 				    			<div class="col-md-2">
-				    				<select class="form-control site-name-list" name="site_name"></select>
+				    				<select class="form-control site-name-list" name="site"></select>
 				    			</div>
 				    			<div class="col-md-2">
-				    				<select class="form-control" name="metric_name">
-				    					<option>Time spent</option>
-				    					<option>Times visited</option>
+				    				<select class="form-control" name="metric">
+				    					<option value="timeSpent">Time spent</option>
+				    					<option value="visitCount">Times visited</option>
 				    				</select>
 				    			</div>
 				    			<div class="col-md-2">
-				    				<select class="form-control" name="operation">
-				    					<option>Less than</option>
-				    					<option>Greater than</option>
-				    					<option>Equal</option>
+				    				<select class="form-control" name="operator">
+				    					<option value="lesserThan">lesser than</option>
+				    					<option value="greaterThan">greater than</option>
+				    					<option value="equals">equals</option>
 				    				</select>
 				    			</div>
 				    			<div class="col-md-2">
-				    				<input type="text" class="form-control" name="value" placeholder="Enter value in Number">
+				    				<input type="text" class="form-control" name="value" placeholder="Enter value in seconds">
 				    			</div>
 				    			<div class="col-md-2">
 				    				<select class="form-control" name="time_window">
-				    					<option>An hour</option>
-				    					<option>An day</option>
-				    					<option>An week</option>
+				    					<option value="hourly">an hour</option>
+				    					<option value="daily">a day</option>
+				    					<option value="weekly">a week</option>
 				    				</select>
 				    			</div>
-				    			<button type="submit" class="btn btn-blue" value="1">Add Rule</button>
-									
 									<div class="row">
 							    	<div class="col-md-12">
 						    		<div class="row mt-30">
@@ -154,25 +152,22 @@
 						    				<h2 class="color-white">Action</h2>
 						    			</div>
 						    		</div>
-							    		<!-- <form id="action_options_form" class="mt-30"> -->
 							    			<div class="col-md-2">
 							    				<select class="form-control action_type_values" name="action_type" id="action_type_values">
-							    					<option value="1">Warning Notification</option>
-							    					<option value="2">Cheers Notification</option>
-							    					<option value="3">Custom Message</option>
-							    					<option value="4">Close Tab</option>
-							    					<option value="5">Open Tab</option>
+							    					<option value="warningNotificationAction">Warning Notification</option>
+							    					<option value="cheersNotificationAction">Cheers Notification</option>
+							    					<option value="customNotificationAction">Custom Notification</option>
+							    					<option value="closeTabAction">Close Tab</option>
+							    					<option value="newTabAction">Open new tab</option>
 							    				</select>
 							    			</div>
 							    			<div class="col-md-2 hide custom-msg-value">
-							    				<input type="text" class="form-control" name="custom_msg_value" placeholder="Enter message">
+							    				<input type="text" class="form-control" name="custom_msg_value" placeholder="Can be a TODO item..">
 							    			</div>
 							    			<div class="col-md-2 hide open-tab-value">
-							    				<input type="text" class="form-control" name="open_tab_value" placeholder="Enter message">
+							    				<input type="text" class="form-control" name="open_tab_value" placeholder="Enter Site to open">
 							    			</div>
-							    			
-							    			<button type="submit" class="btn btn-blue" value="1">Add Action</button>
-							    		<!-- </form> -->
+							    			<button type="submit" class="btn btn-blue" value="1">Add Rule</button>
 							    	</div>
 							    </div>
 									

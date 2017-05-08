@@ -26,7 +26,7 @@
 //         'compareAgainst': '30'
 //       },
 //       'actions': [{
-//         'actionKey': 'warningNotification'
+//         'actionType': 'warningNotificationAction'
 //       }]
 //     },
 //     'daily': {
@@ -36,9 +36,9 @@
 //         'compareAgainst': '200'
 //       },
 //       'actions': [{
-//         'actionKey': 'warningNotification'
+//         'actionType': 'warningNotificationAction'
 //       },{
-//         'actionKey': 'closeTab'
+//         'actionType': 'closeTabAction'
 //       }
 //       ]
 //     }
@@ -61,26 +61,26 @@ var operators = {
 }
 
 var actionVsFn = {
-  'alert': function(msg) {
+  'alertAction': function(msg) {
     alert('alert:' + msg);
   },
-  'newTab': function(msg) {
-    alert('newTab:' + msg);
+  'newTabAction': function(msg) {
+    alert('newTabAction:' + msg);
   },
-  'closeTab': function(msg) {
-    alert('closeTab:' + msg);
+  'closeTabAction': function(msg) {
+    alert('closeTabAction:' + msg);
   },
-  'cheersNotification': function(msg) {
+  'cheersNotificationAction': function(msg) {
     alert('Cheers!:' + msg);
   },
-  'warningNotification': function(msg) {
+  'warningNotificationAction': function(msg) {
     alert('Warning!:' + msg);
   },
-  'blockingNotification': function(msg) {
+  'blockingNotificationAction': function(msg) {
     alert('Blocking!:' + msg);
   },
-  'customNotification': function(msg) {
-    alert('customNotification:' + msg);
+  'customNotificationAction': function(msg) {
+    alert('customNotificationAction:' + msg);
   }
 }
 
@@ -103,7 +103,7 @@ var siteVsRules = {
         'compareAgainst': '10'
       },
       'actions': [{
-        'actionKey': 'warningNotification'
+        'actionType': 'warningNotificationAction'
       }]
     }
   }
@@ -136,7 +136,7 @@ function isEvent(operator, actualValue, compareAgainst) {
 
 function executeActions(actions) {
   actions.forEach(function(action) {
-    actionVsFn[action.actionKey]('test');
+    actionVsFn[action.actionType]('test');
   });
 }
 
@@ -170,7 +170,7 @@ function updateAndObserve(counterObj, key, value) {
 // updateAndObserve(counter, 'facebook.com', 40);
 
 // TODO
-// 1. create 3 counters for 3 time windows
-// 2. update counters on tab switch events.
 // 3. persist counters
 // 4. Time observer - to reset counters on time window expiry.
+// 5. persist rules.
+// 6. load rules from persistence

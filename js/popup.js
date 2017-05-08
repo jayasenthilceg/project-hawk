@@ -163,8 +163,10 @@ function initialize() {
 }
 $(function() {
   $("#rule_options_form").on('submit',function(e){
-    ruleOptions = objectifyForm($(this).serializeArray());
-    console.log(ruleOptions); // remove it vikki 
+    var actionOptions = objectifyForm($(this).serializeArray());
+    console.log(actionOptions);
+    var storedRules = localStorage.rules;
+    localStorage.rules = JSON.parse(localStorage.rules);
     e.preventDefault();
   });
   function objectifyForm(formArray) {
@@ -176,22 +178,17 @@ $(function() {
   }
 
   $('#action_type_values').change(function(){
-    if (this.value==='3')
+    if (this.value==='customNotificationAction')
     {
       $('.custom-msg-value').fadeIn("slow").removeClass('hide');
       $('.open-tab-value').fadeOut("slow").addClass('hide');
     }
-    else if(this.value ==='5') {
+    else if(this.value ==='newTabAction') {
       $('.open-tab-value').fadeIn("slow").removeClass('hide');
       $('.custom-msg-value').fadeOut("slow").addClass('hide');
     } else {
       $('.custom-msg-value, .open-tab-value').fadeOut("slow").addClass('hide');
     }
-  });
-  $("#action_options_form").on('submit',function(e){
-    actionOptions = objectifyForm($(this).serializeArray());
-    console.log(actionOptions); // remove it vikki 
-    e.preventDefault();
   });
 });
 document.addEventListener("DOMContentLoaded", function() {
