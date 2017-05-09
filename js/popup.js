@@ -53,7 +53,7 @@ var siteHostVsCategory = {
   'stackoverflow.com': 'productivity',
   'google.com': 'search',
   'calendar.google.com': 'communications',
-}
+};
 
 var siteHostVsTimeSpent = {}
 var categoryVsTimeSpent = {
@@ -164,17 +164,52 @@ function initialize() {
 $(function() {
   $("#rule_options_form").on('submit',function(e){
     var actionOptions = objectifyForm($(this).serializeArray());
-    console.log(actionOptions);
-    var storedRules = localStorage.rules;
-    localStorage.rules = JSON.parse(localStorage.rules);
+    debugger;
+    localStorage.rules = JSON.stringify(actionOptions);
+      // var siteVsRules = {
+//   'twitter.com': {
+//     'hourly': {
+//       'event': {
+//         //'metric': 'timeSpent',
+//         'operator': 'greaterThan',
+//         'compareAgainst': '10'
+//       },
+//       'actions': [{
+//         'actionType': 'warningNotificationAction'
+//       }]
+//     }
+//   }
+// }
+
     e.preventDefault();
   });
   function objectifyForm(formArray) {
+    // debugger;
     returnArray = {};
     for (var i = 0; i < formArray.length; i++) {
         returnArray[formArray[i]['name']] = formArray[i]['value'];
     }
-    return returnArray;
+    var newRuleObject = {
+      'hourly': {
+        'event': {
+          'operator': returnArray['operator'],
+          'compareAgainst': returnArray['value']
+        },
+        'actions': [{
+          'actionType': returnArray['action_type']
+        }]
+      }
+    };
+    // debugger;
+    var returnObject = {},
+        url = '';
+    try {
+        url = new URL(returnArray['site']).hostname.replace('www.', '');
+    }catch(e) {
+        url = returnArray['site'];
+    }
+      returnObject[url] = newRuleObject;
+    return returnObject;
   }
 
   $('#action_type_values').change(function(){
