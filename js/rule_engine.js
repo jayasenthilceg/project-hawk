@@ -94,20 +94,20 @@ var metrics = {
 }
 
 
-var siteVsRules = {
-  'twitter.com': {
-    'hourly': {
-      'event': {
-        //'metric': 'timeSpent',
-        'operator': 'greaterThan',
-        'compareAgainst': '10'
-      },
-      'actions': [{
-        'actionType': 'warningNotificationAction'
-      }]
-    }
-  }
-}
+// var siteVsRules = {
+//   'twitter.com': {
+//     'hourly': {
+//       'event': {
+//         //'metric': 'timeSpent',
+//         'operator': 'greaterThan',
+//         'compareAgainst': '10'
+//       },
+//       'actions': [{
+//         'actionType': 'warningNotificationAction'
+//       }]
+//     }
+//   }
+// }
 
 // TEST
 // var counter = {
@@ -142,6 +142,8 @@ function executeActions(actions) {
 
 function evaluateRulesFor(site, value, metric) {
   metric = 'timeSpent';
+  // debugger;
+  var siteVsRules = JSON.parse(localStorage.rules);
   if (!(site in siteVsRules)) {
    return;
   }
